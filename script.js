@@ -24,6 +24,18 @@ const Restaurant=mongoose.model(
 
 )
 
+const Item=mongoose.model(
+    "Item",
+    new mongoose.Schema({
+        
+        item:{type:Number,require:true},       
+       
+        
+    })
+
+)
+
+
 app.get("/",(req,res)=>{
     res.send("Welcome to the restaurant!");
 
@@ -36,9 +48,16 @@ app.post("/restaurants",async(req,res)=>{
     
 });
 
+app.post("/items",async(req,res)=>{
+    const item=new Item(req.body);
+    await item.save();
+    res.json(item);
+    
+});
+
 app.get("/restaurants",async(req,res)=>{
-    const restaurants=await Restaurant.find();
-    res.json(restaurants);
+    const items=await Item.find();
+    res.json(items);
 })
 
 app.listen(5000,()=>console.log("server is running on port 5000"));
